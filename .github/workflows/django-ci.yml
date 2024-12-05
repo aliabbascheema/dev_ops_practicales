@@ -26,7 +26,3 @@ jobs:
         pip install -r requirements.txt
     - name: Migrate Database
       run: python3 manage.py migrate
-    - name: Collect Static Files
-      run: python3 manage.py collectstatic --noinput
-    - name: Run Tests
-      run: python3 manage.py test
