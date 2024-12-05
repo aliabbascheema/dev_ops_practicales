@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.8]
+        python-version: [3.8, 3.9, 3.10, 3.11]
 
     steps:
     - uses: actions/checkout@v4
@@ -23,8 +23,10 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        python3 -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Migrate Database
+      run: python3 manage.py migrate
+    - name: Collect Static Files
+      run: python3 manage.py collectstatic --noinput
     - name: Run Tests
-      run: |
-        python3 manage.py test
+      run: python3 manage.py test
